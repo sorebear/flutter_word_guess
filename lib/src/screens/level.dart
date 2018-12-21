@@ -33,7 +33,14 @@ class _LevelState extends State<Level> {
   List<String> guess = [];
   List<GuessObj> previousGuesses = []; 
 
-  getAvailableLetters(word) {
+  _LevelState(String levelName, int levelNum, String secretWord) {
+    this.levelName = levelName;
+    this.levelNum = levelNum;
+    this.secretWord = secretWord.toUpperCase().split('');
+    this.lettersArr = _getAvailableLetters(secretWord);
+  }
+
+  _getAvailableLetters(word) {
     List<String> allLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     List<String> secretWordLetters = word.toUpperCase().split('');
     List<String> guessableLettersOption = [];
@@ -57,7 +64,7 @@ class _LevelState extends State<Level> {
     return guessableLettersOption;
   }
 
-  mapListToWidgets(int subStart, int subEnd) {
+  List<Widget> _mapListToWidgets(int subStart, int subEnd) {
     List<Widget> letterButtons = [];
 
     for (int i = 0; i < lettersArr.length; i += 1) {
@@ -86,7 +93,7 @@ class _LevelState extends State<Level> {
     return letterButtons.sublist(subStart, subEnd);
   }
 
-  setDashes() {
+  String _setDashes() {
     List<String> dashes = [];
     for (int i = guess.length; i < secretWord.length; i += 1) {
       dashes.add('-');
@@ -95,7 +102,7 @@ class _LevelState extends State<Level> {
     return dashes.join('');
   }
 
-  evaluateGuess() {
+  void _evaluateGuess() {
     if (guess.join('') == secretWord.join('')) {
       print('YOU WIN!');
     }
@@ -139,177 +146,221 @@ class _LevelState extends State<Level> {
     });
   }
 
-  _LevelState(String levelName, int levelNum, String secretWord) {
-    this.levelName = levelName;
-    this.levelNum = levelNum;
-    this.secretWord = secretWord.toUpperCase().split('');
-    this.lettersArr = getAvailableLetters(secretWord);
+  void _showToast(BuildContext context, String toastMessage) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(toastMessage),
+        action: SnackBarAction(
+          label: 'DISMISS',
+          onPressed: scaffold.hideCurrentSnackBar,
+        ),
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).primaryColor;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('${levelNum.toString()} | $levelName'),
+        centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4.0),
-                  child: DecoratedBox(
+      body: Builder(
+        builder: (context) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  DecoratedBox(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.0),
-                      border: Border.all(
-                        color: Colors.pink,
-                        width: 4.0,
+                      image: DecorationImage(
+                        image: ExactAssetImage('images/patterns/morocco.png'),
+                        fit: BoxFit.cover,
                       )
                     ),
                     child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        guess.join('') + setDashes(),
-                        style: TextStyle(
-                          fontSize: 40.0,
-                          fontFamily: 'monospace'
-                        )
-                      ),
-                    )
-                  )
-                ),
-                Expanded(
-                  child: CustomScrollView(
-                    slivers: <Widget>[
-                      SliverFixedExtentList(
-                        itemExtent: 44.0,
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            return Container(
+                      padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0),
+                              color: Colors.white,
+                            ),
+                            child: Container(
                               alignment: Alignment.center,
-                              color: index % 2 == 0 ? Colors.grey[200] : Colors.grey[50],
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(right: 8.0),
-                                    child: Text(previousGuesses[index].printGuess),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),  
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(Icons.done_all),
-                                        Text(previousGuesses[index].printCorrectLetterAndPos),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(right: 8.0),  
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(Icons.done),
-                                        Text(previousGuesses[index].printCorrectLetter)
-                                      ],
-                                    )
-                                  )
-                                ],
-                              )
-                            );
-                          },
-                          childCount: previousGuesses.length
-                        ),
+                              padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                              child: Text(
+                                guess.join('') + _setDashes(),
+                                style: TextStyle(
+                                  fontSize: 40.0,
+                                  fontFamily: 'NovaMono',
+                                )
+                              ),
+                            )
+                          ),
+                        ],
                       )
-                    ],
-                  )
-                ),
-              ],
-            )
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
-                    child: RaisedButton(
-                      child: Icon(Icons.backspace),
-                      onPressed: () {
-                        setState(() {
-                          guess.removeLast();
-                        });
-                      },
                     ),
-                  )
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
-                    child: RaisedButton(
-                      child: Text('Clear'),
-                      onPressed: () {
-                        setState(() {
-                          guess.clear();
-                        });
-                      }
+                  ),
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: <Widget>[
+                        SliverFixedExtentList(
+                          itemExtent: 44.0,
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return Container(
+                                alignment: Alignment.center,
+                                color: index % 2 == 0 ? Colors.grey[200] : Colors.grey[50],
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(right: 8.0),
+                                      child: Text(
+                                        previousGuesses[index].printGuess,
+                                        style: TextStyle(
+                                          fontFamily: 'NovaMono',
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),  
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.spellcheck,
+                                            size: 20.0,
+                                            
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.fromLTRB(4.0, 0, 4.0, 0),
+                                            child: Text(previousGuesses[index].printCorrectLetterAndPos),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 8.0),  
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.done,
+                                            size: 20.0,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.fromLTRB(4.0, 0, 4.0, 0),
+                                            child: Text(previousGuesses[index].printCorrectLetter)
+                                          ),
+                                        ],
+                                      )
+                                    )
+                                  ],
+                                )
+                              );
+                            },
+                            childCount: previousGuesses.length
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+                ],
+              )
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+                      child: RaisedButton(
+                        child: Icon(Icons.backspace),
+                        onPressed: () {
+                          setState(() {
+                            guess.removeLast();
+                          });
+                        },
+                      ),
+                    )
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+                      child: RaisedButton(
+                        child: Text('Clear'),
+                        onPressed: () {
+                          setState(() {
+                            guess.clear();
+                          });
+                        }
+                      )
                     )
                   )
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
-            child: Row(
-              children: mapListToWidgets(0, 5),
+            Container(
+              padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+              child: Row(
+                children: _mapListToWidgets(0, 5),
+              ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
-            child: Row(
-              children: mapListToWidgets(5, 10),
-            )
-          ),
-          Container(
-            height: 64.0,
-            padding: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-            // child: Expanded(
-              child: RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Text(
-                        'SUBMIT',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        )
-                      ),
-                    ),
-                    Icon(Icons.send),
-                  ]
-                ),
-                onPressed: () {
-                  if (guess.length == secretWord.length) {
-                    evaluateGuess();
-                  }
-                },
+            Container(
+              padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+              child: Row(
+                children: _mapListToWidgets(5, 10),
               )
-            // )
-          )
-        ],
-      )
+            ),
+            Container(
+              height: 64.0,
+              padding: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 8.0),
+              // child: Expanded(
+                child: RaisedButton(
+                  color: primaryColor,
+                  textColor: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Text(
+                          'SUBMIT',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          )
+                        ),
+                      ),
+                      Icon(Icons.send),
+                    ]
+                  ),
+                  onPressed: () {
+                    if (guess.length == secretWord.length) {
+                      _evaluateGuess();
+                    } else {
+                      _showToast(
+                        context,
+                        'Your guess must be ${secretWord.length.toString()} letters'
+                      );
+                    }
+                  },
+                )
+              // )
+            )
+          ],
+        ),
+      ),
     );
   }
 }

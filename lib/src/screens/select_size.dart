@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
-import '../widgets/level_tile.dart';
 import '../data/level_data.dart';
+import '../widgets/size_tile.dart';
 
-class SelectLevel extends StatelessWidget {
-  final List<LevelTile> levels = [];
-  final BuildContext context;
-  final levelSize;
+class SelectSize extends StatelessWidget {
+  final List<SizeTile> levelSizes = [];
 
-  SelectLevel(this.context, this.levelSize) {
-    for (int levelNum = 1; levelNum <= levelData[levelSize].length; levelNum += 1) {
-      String levelName = levelData[levelSize][levelNum - 1]['name'];
-      String secretWord = levelData[levelSize][levelNum - 1]['secretWord'];
-      LevelTile levelTile = LevelTile(context, levelNum, levelName, secretWord);
-      
-      levels.add(levelTile);
-    }
+  SelectSize(BuildContext context) {
+    levelData.forEach((key, value) {
+      print('KEY: ' + key);
+      SizeTile sizeTile = SizeTile(context, key);
+      levelSizes.add(sizeTile);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Level'),
+        title: Text('Select Size'),
         centerTitle: true,
       ),
       body: Stack(
@@ -36,12 +32,12 @@ class SelectLevel extends StatelessWidget {
             )
           ),
           GridView.count(
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             padding: EdgeInsets.all(12.0),
             mainAxisSpacing: 8.0,
             crossAxisSpacing: 8.0,
-            children: levels,
-          )
+            children: levelSizes,
+          ),
         ],
       )
     );
