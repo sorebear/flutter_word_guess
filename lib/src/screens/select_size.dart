@@ -6,9 +6,8 @@ class SelectSize extends StatelessWidget {
   final List<SizeTile> levelSizes = [];
 
   SelectSize(BuildContext context) {
-    levelData.forEach((key, value) {
-      print('KEY: ' + key);
-      SizeTile sizeTile = SizeTile(context, key);
+    levelData.forEach((size, levels) {
+      SizeTile sizeTile = SizeTile(context, size);
       levelSizes.add(sizeTile);
     });
   }

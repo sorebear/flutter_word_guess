@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'select_level.dart';
 
 class Level extends StatefulWidget {
   final String levelName;
@@ -105,6 +106,8 @@ class _LevelState extends State<Level> {
   void _evaluateGuess() {
     if (guess.join('') == secretWord.join('')) {
       print('YOU WIN!');
+      _showWinDialogue();
+      return;
     }
 
     int correctLetterAndPos = 0;
@@ -133,12 +136,6 @@ class _LevelState extends State<Level> {
         fallbackListSecretWord.remove(posOfIndexInRemainingList);
       }
     }
-    
-    print('GUESS: ' + guess.join(''));
-    print('SECRET WORD: ' + secretWord.join(''));
-    print('Correct Letters and Correct Position: ' + correctLetterAndPos.toString());
-    print('Correct Letters but Wrong Position: ' + correctLetter.toString());
-    print(previousGuesses);
 
     setState(() {
       previousGuesses.insert(0, new GuessObj(guess.join(''), correctLetterAndPos, correctLetter));
@@ -156,6 +153,49 @@ class _LevelState extends State<Level> {
           onPressed: scaffold.hideCurrentSnackBar,
         ),
       )
+    );
+  }
+
+  Future<void> _showWinDialogue() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'You Win!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18.0,
+              color: Color.fromARGB(255, 74, 175, 198),
+            )
+          ),
+          content: previousGuesses.length == 0 ? Text(
+            'You found the secret word with only 1 guess!',
+            textAlign: TextAlign.center,
+          ) : Text(
+            'You found the secret word using ${(previousGuesses.length + 1).toString()} guesses.',
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            RaisedButton(
+              color: Color.fromARGB(255, 74, 175, 198),
+              child: Text(
+                'Return To Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                )
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectLevel(context, '${secretWord.length.toString()}-Letter Words'))
+                );
+              },
+            )
+          ],
+        );
+      }
     );
   }
 

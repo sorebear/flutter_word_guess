@@ -1,17 +1,58 @@
 Map levelData = {
   "4-Letter Words": [
-    { "name": "Starry, Starry Night", "secretWord": "moon" }
+    { "name": "Starry, Starry Night", "secretWord": "moon" },
+    { "name": "The Garden", "secretWord": "weed" },
+    { "name": "Wishing Well", "secretWord": "deep" },
+    { "name": "Precious Spaces", "secretWord": "area" },
+    { "name": "Your Royal Majesty", "secretWord": "duke" },
+    { "name": "Desert Oasis", "secretWord": "sand" },
+    { "name": "Sweet and Spicy", "secretWord": "herb" },
+    { "name": "Keep Out", "secretWord": "gate" },
+    { "name": "Hidden in Plain Sight", "secretWord": "mask" },
+    { "name": "A Simple Trick", "secretWord": "hand" },
+    { "name": "Bright Summer Sun", "secretWord": "burn" },
+    { "name": "Signs of Aging", "secretWord": "time" },
   ],
   "5-Letter Words": [
     { "name": "Tidal Wave", "secretWord": "water" },
-    { "name": "Bicycle Ride", "secretWord": "pedal" }
+    { "name": "Bicycle Ride", "secretWord": "pedal" },
+    { "name": "Brand New Shoes", "secretWord": "shine" },
+    { "name": "Security", "secretWord": "strap" },
+    { "name": "You Can Fly", "secretWord": "arrow" },
+    { "name": "Sneaky Pete", "secretWord": "creep" },
+    { "name": "It Has Been Noted", "secretWord": "thank" },
+    { "name": "I'll Show You", "secretWord": "prove" },
+    { "name": "Sentimental Value", "secretWord": "price" },
+    { "name": "The Old Swimming Hole", "secretWord": "water" },
+    { "name": "Governing Force", "secretWord": "mayor" },
+    { "name": "Good and Plenty", "secretWord": "ample" },
   ],
   "6-Letter Words": [
-      { "name": "Vanilla Twilight", "secretWord": "galaxy" },
-      { "name": "Cave In", "secretWord": "depths" }
+      { "name": "Emerald Twilight", "secretWord": "galaxy" },
+      { "name": "Cave In", "secretWord": "depths" },
+      { "name": "A Great Position", "secretWord": "career" },
+      { "name": "Wide Open Spaces", "secretWord": "nature" },
+      { "name": "Hanging Out", "secretWord": "linger" },
+      { "name": "Deep in Thought", "secretWord": "wonder" },
+      { "name": "Singing in the Rain", "secretWord": "chorus" },
+      { "name": "The Prisoners", "secretWord": "marble" },
+      { "name": "Repeat After Me", "secretWord": "script" },
+      { "name": "Arrival", "secretWord": "appear" },
+      { "name": "Strong Medicine", "secretWord": "remedy" },
+      { "name": "An Afternoon Picnic", "secretWord": "basket" },
   ],
   "7-Letter Words": [
       { "name": "Speckle Spackle", "secretWord": "painter" },
-      { "name": "The Saltwater Room", "secretWord": "seaside" }
+      { "name": "The Sweet Salty Air", "secretWord": "seaside" },
+      { "name": "A Nice Feeling", "secretWord": "texture" },
+      { "name": "A Perfect Union", "secretWord": "wedding" },
+      { "name": "Similarities", "secretWord": "related" },
+      { "name": "Solar Flares", "secretWord": "equinox" },
+      { "name": "Another Way", "secretWord": "passage" },
+      { "name": "Wasted", "secretWord": "rubbish" },
+      { "name": "College Roadtrip", "secretWord": "highway" },
+      { "name": "I Put A Spell On You", "secretWord": "fantasy" },
+      { "name": "Strong Coffee", "secretWord": "grounds" },
+      { "name": "Don't Call It A Comeback", "secretWord": "revival" },
     ]
 };
