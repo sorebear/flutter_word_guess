@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'select_level.dart';
 
 class Level extends StatefulWidget {
   final String levelName;
@@ -187,10 +186,7 @@ class _LevelState extends State<Level> {
                 )
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SelectLevel(context, '${secretWord.length.toString()}-Letter Words'))
-                );
+                Navigator.pop(context, true);
               },
             )
           ],
