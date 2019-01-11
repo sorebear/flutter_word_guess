@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './select_size.dart';
 
 class Home extends StatelessWidget {
 
@@ -36,10 +35,7 @@ class Home extends StatelessWidget {
                 child: Text('Select Level'),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SelectSize(context))
-                  );
+                  Navigator.pushNamed(context, '/select-size');
                 } 
               )
             ],

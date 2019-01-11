@@ -4,15 +4,13 @@ import '../data/level_data.dart';
 
 class SelectLevel extends StatelessWidget {
   final List<LevelTile> levels = [];
-  final BuildContext context;
   final levelSize;
 
-  SelectLevel(this.context, this.levelSize) {
+  SelectLevel(this.levelSize) {
     for (int levelNum = 1; levelNum <= levelData[levelSize].length; levelNum += 1) {
-      String levelName = levelData[levelSize][levelNum - 1]['name'];
-      String secretWord = levelData[levelSize][levelNum - 1]['secretWord'];
-      LevelTile levelTile = LevelTile(context, levelNum, levelName, secretWord);
-      
+      String levelNumString = levelNum < 10 ? '00$levelNum' : levelNum < 100 ? '0$levelNum' : '$levelNum';
+      String levelName = levelData[levelSize][levelNumString]['name'];
+      LevelTile levelTile = LevelTile(levelSize, levelNumString, levelName);
       levels.add(levelTile);
     }
   }
@@ -21,7 +19,7 @@ class SelectLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Level'),
+        title: Text('$levelSize Levels'),
         centerTitle: true,
       ),
       body: Stack(

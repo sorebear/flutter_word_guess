@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import '../screens/level.dart';
 
 class LevelTile extends StatelessWidget {
-  final BuildContext context;
-  final int levelNum;
+  final String levelSize;
+  final String levelNum;
   final String levelName;
-  final String secretWord;
 
-  LevelTile(this.context, this.levelNum, this.levelName, this.secretWord);
+  LevelTile(this.levelSize, this.levelNum, this.levelName);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +14,7 @@ class LevelTile extends StatelessWidget {
     return Container(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Level(levelName, levelNum, secretWord)),
-          );
+          Navigator.pushNamed(context, '/level/$levelSize/$levelNum');
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -36,14 +31,14 @@ class LevelTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Level ${levelNum.toString()}',
+                  'Level ${int.parse(levelNum)}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black
                   )
                 ),
                 Text(
-                  '$levelName',
+                  levelName,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: primaryColor,

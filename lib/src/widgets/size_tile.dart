@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../screens/select_level.dart';
 
 class SizeTile extends StatelessWidget {
   final BuildContext context;
@@ -12,18 +11,11 @@ class SizeTile extends StatelessWidget {
     return Container(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SelectLevel(context, levelSize)),
-          );
+          Navigator.pushNamed(context, '/select-level/$levelSize');
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            border: Border.all(
-              color: Colors.grey[300],
-              width: 2.0,
-            ),
             color: Colors.pink,
           ),
           child: Container(
@@ -32,7 +24,7 @@ class SizeTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '$levelSize',
+                  '$levelSize Words',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,

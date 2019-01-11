@@ -32,9 +32,9 @@ class SelectSize extends StatelessWidget {
           ),
           GridView.count(
             crossAxisCount: 2,
-            padding: EdgeInsets.all(12.0),
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
+            padding: EdgeInsets.all(16.0),
+            mainAxisSpacing: 16.0,
+            crossAxisSpacing: 16.0,
             children: levelSizes,
           ),
         ],
