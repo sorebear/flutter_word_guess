@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../data/level_data.dart';
 import '../widgets/size_tile.dart';
 
 class SelectSize extends StatelessWidget {
+  final levelData;
   final List<SizeTile> levelSizes = [];
 
-  SelectSize(BuildContext context) {
+  SelectSize({this.levelData}) {
     levelData.forEach((size, levels) {
-      SizeTile sizeTile = SizeTile(context, size);
+      SizeTile sizeTile = SizeTile(size);
       levelSizes.add(sizeTile);
     });
   }
@@ -28,7 +28,7 @@ class SelectSize extends StatelessWidget {
                 image: ExactAssetImage('images/patterns/morocco.png'),
                 repeat: ImageRepeat.repeat,
               ),
-            )
+            ),
           ),
           GridView.count(
             crossAxisCount: 2,
@@ -38,7 +38,7 @@ class SelectSize extends StatelessWidget {
             children: levelSizes,
           ),
         ],
-      )
+      ),
     );
   }
 }

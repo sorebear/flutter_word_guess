@@ -6,7 +6,21 @@ import './screens/level.dart';
 import './screens/select_level.dart';
 import './screens/select_size.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return AppState();
+  }
+}
+
+class AppState extends State<App> {
+  final _levelDataObj = LevelData();
+
+  _markLevelAsComplete(String levelSize, String levelNum) {
+    setState(() {
+      _levelDataObj.data[levelSize][levelNum]['completed'] = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,34 +36,32 @@ class App extends StatelessWidget {
 
   Route routes(RouteSettings settings) {
     if (settings.name == '/') {
-      print('[Home Route] ' + settings.name);
-      return MaterialPageRoute(
-        builder: (BuildContext context) {
-          return Home();
-        }
-      );
+      return MaterialPageRoute(builder: (BuildContext context) {
+        return Home();
+      });
     } else if (settings.name.contains('/select-size')) {
-      print('[Select Size Route] ' + settings.name);
-      return MaterialPageRoute(
-        builder: (BuildContext context) {
-          return SelectSize(context);
-        }
-      );
+      return MaterialPageRoute(builder: (BuildContext context) {
+        return SelectSize(levelData: _levelDataObj.data);
+      });
     } else if (settings.name.contains('/select-level/')) {
-      print('[Select Level Route] ' + settings.name);
       String levelSize = settings.name.replaceFirst('/select-level/', '');
-      return MaterialPageRoute(
-        builder: (BuildContext context) {
-          return SelectLevel(levelSize);
-        }
-      );
+      return MaterialPageRoute(builder: (BuildContext context) {
+        return SelectLevel(levelSize, levelData: _levelDataObj.data);
+      });
     } else {
-      List<String> sizeAndLevel = settings.name.replaceFirst('/level/', '').split('/');
-      Map<String, dynamic> levelMap = levelData[sizeAndLevel[0]][sizeAndLevel[1]];
+      List<String> sizeAndLevel =
+          settings.name.replaceFirst('/level/', '').split('/');
+      Map<String, dynamic> levelMap =
+          _levelDataObj.data[sizeAndLevel[0]][sizeAndLevel[1]];
       return MaterialPageRoute(
         builder: (BuildContext context) {
-          return Level(levelMap['name'], sizeAndLevel[1], levelMap['secretWord']);
-        }
+          return Level(
+            levelName: levelMap['name'],
+            levelNum: sizeAndLevel[1],
+            secretWord: levelMap['secretWord'],
+            markLevelAsComplete: _markLevelAsComplete,
+          );
+        },
       );
     }
   }

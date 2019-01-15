@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: ExactAssetImage('images/patterns/morocco-blue.png'),
-              repeat: ImageRepeat.repeat,
-            ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage('images/patterns/morocco-blue.png'),
+            repeat: ImageRepeat.repeat,
           ),
-        child: Center( 
+        ),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-
             children: <Widget>[
               Text(
                 'Word Guess',
@@ -28,20 +26,23 @@ class Home extends StatelessWidget {
                       offset: Offset(2.0, 2.0),
                       blurRadius: 1.0,
                     ),
-                  ]
-                )
+                  ],
+                ),
               ),
               RaisedButton(
                 child: Text('Select Level'),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/select-size');
-                } 
+                  Navigator.pushNamed(
+                    context,
+                    '/select-size',
+                  );
+                },
               )
             ],
-          )
-        )
-      ) 
+          ),
+        ),
+      ),
     );
   }
 }

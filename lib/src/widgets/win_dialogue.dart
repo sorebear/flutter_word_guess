@@ -4,8 +4,9 @@ import '../models/guess.dart';
 
 class WinDialogue extends StatelessWidget {
   final List<Guess> _previousGuesses;
+  final Function markLevelAsComplete;
 
-  WinDialogue(this._previousGuesses);
+  WinDialogue(this._previousGuesses, {this.markLevelAsComplete});
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SizeTile extends StatelessWidget {
-  final BuildContext context;
   final String levelSize;
 
-  SizeTile(this.context, this.levelSize);
+  SizeTile(this.levelSize);
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +28,12 @@ class SizeTile extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24.0,
-                  )
+                  ),
                 ),
-              ]
+              ],
             ),
-          ) 
-        )
+          ),
+        ),
       ),
     );
   }

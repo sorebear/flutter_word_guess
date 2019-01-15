@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import '../widgets/level_tile.dart';
-import '../data/level_data.dart';
 
 class SelectLevel extends StatelessWidget {
   final List<LevelTile> levels = [];
-  final levelSize;
+  final Map<String, dynamic> levelData;
+  final String levelSize;
 
-  SelectLevel(this.levelSize) {
-    for (int levelNum = 1; levelNum <= levelData[levelSize].length; levelNum += 1) {
-      String levelNumString = levelNum < 10 ? '00$levelNum' : levelNum < 100 ? '0$levelNum' : '$levelNum';
+  SelectLevel(this.levelSize, {this.levelData}) {
+    for (int levelNum = 1;
+        levelNum <= levelData[levelSize].length;
+        levelNum += 1) {
+      String levelNumString = levelNum < 10
+          ? '00$levelNum'
+          : levelNum < 100 ? '0$levelNum' : '$levelNum';
       String levelName = levelData[levelSize][levelNumString]['name'];
-      LevelTile levelTile = LevelTile(levelSize, levelNumString, levelName);
+      bool levelCompleted = levelData[levelSize][levelNumString]['completed'];
+      LevelTile levelTile =
+          LevelTile(levelSize, levelNumString, levelName, levelCompleted);
       levels.add(levelTile);
     }
   }
@@ -31,7 +37,7 @@ class SelectLevel extends StatelessWidget {
                 image: ExactAssetImage('images/patterns/morocco.png'),
                 repeat: ImageRepeat.repeat,
               ),
-            )
+            ),
           ),
           GridView.count(
             crossAxisCount: 3,
@@ -41,7 +47,7 @@ class SelectLevel extends StatelessWidget {
             children: levels,
           )
         ],
-      )
+      ),
     );
   }
 }

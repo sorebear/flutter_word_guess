@@ -9,7 +9,14 @@ class Keyboard extends StatelessWidget {
   final List<String> lettersArr;
   final List<String> secretWord;
 
-  Keyboard({this.add, this.backspace, this.clear, this.evaluateGuess, this.guess, this.lettersArr, this.secretWord});
+  Keyboard(
+      {this.add,
+      this.backspace,
+      this.clear,
+      this.evaluateGuess,
+      this.guess,
+      this.lettersArr,
+      this.secretWord});
 
   void _showToast(BuildContext context, String toastMessage) {
     final scaffold = Scaffold.of(context);
@@ -20,7 +27,7 @@ class Keyboard extends StatelessWidget {
           label: 'DISMISS',
           onPressed: scaffold.hideCurrentSnackBar,
         ),
-      )
+      ),
     );
   }
 
@@ -47,7 +54,7 @@ class Keyboard extends StatelessWidget {
 
       letterButtons.add(button);
     }
-    
+
     return letterButtons.sublist(subStart, subEnd);
   }
 
@@ -70,7 +77,7 @@ class Keyboard extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
                   child: RaisedButton(
                     child: Icon(Icons.backspace),
-                    onPressed: backspace
+                    onPressed: backspace,
                   ),
                 ),
               ),
@@ -79,7 +86,7 @@ class Keyboard extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
                   child: RaisedButton(
                     child: Text('Clear'),
-                    onPressed: clear
+                    onPressed: clear,
                   ),
                 ),
               ),
@@ -105,23 +112,30 @@ class Keyboard extends StatelessWidget {
             color: primaryColor,
             textColor: Colors.white,
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Text('SUBMIT',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(
+                    right: 8.0,
                   ),
-                  Icon(Icons.send),
-                ]),
+                  child: Text(
+                    'SUBMIT',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ),
+                Icon(Icons.send),
+              ],
+            ),
             onPressed: () {
               if (guess.length == secretWord.length) {
                 evaluateGuess(context);
               } else {
-                _showToast(context,
-                    'Your guess must be ${secretWord.length} letters');
+                _showToast(
+                  context,
+                  'Your guess must be ${secretWord.length} letters',
+                );
               }
             },
           ),

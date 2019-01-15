@@ -44,29 +44,26 @@ class PreviousGuessesList extends StatelessWidget {
         slivers: <Widget>[
           SliverFixedExtentList(
             itemExtent: 44.0,
-            delegate: SliverChildBuilderDelegate((BuildContext sliverContext, int index) {
-              return Container(
-                alignment: Alignment.center,
-                color: index % 2 == 0 ? Colors.grey[200] : Colors.grey[50],
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    showGuessWord(_previousGuesses[index].printGuess),
-                    showSymoblsWithNumber(
-                      Icons.spellcheck,
-                      _previousGuesses[index].printCorrectLetterAndPos
-                    ),
-                    showSymoblsWithNumber(
-                      Icons.done,
-                      _previousGuesses[index].printCorrectLetter
-                    ),
-                  ],
-                ),
-              );
-            },
-            childCount: _previousGuesses.length),
-            // childCount: _previousGuesses.length),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext sliverContext, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  color: index % 2 == 0 ? Colors.grey[200] : Colors.grey[50],
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      showGuessWord(_previousGuesses[index].printGuess),
+                      showSymoblsWithNumber(Icons.spellcheck,
+                          _previousGuesses[index].printCorrectLetterAndPos),
+                      showSymoblsWithNumber(Icons.done,
+                          _previousGuesses[index].printCorrectLetter),
+                    ],
+                  ),
+                );
+              },
+              childCount: _previousGuesses.length,
+            ),
           ),
         ],
       ),

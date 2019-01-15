@@ -4,8 +4,9 @@ class LevelTile extends StatelessWidget {
   final String levelSize;
   final String levelNum;
   final String levelName;
+  final bool levelCompleted;
 
-  LevelTile(this.levelSize, this.levelNum, this.levelName);
+  LevelTile(this.levelSize, this.levelNum, this.levelName, this.levelCompleted);
 
   @override
   Widget build(BuildContext context) {
@@ -23,32 +24,30 @@ class LevelTile extends StatelessWidget {
               color: primaryColor,
               width: 3.0,
             ),
-            color: Colors.white,
+            color: levelCompleted ? Colors.grey : Colors.white,
           ),
           child: Container(
             padding: EdgeInsets.fromLTRB(10.0, 16.0, 10.0, 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Level ${int.parse(levelNum)}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black
-                  )
-                ),
+                Text('Level ${int.parse(levelNum)}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                    )),
                 Text(
                   levelName,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: 12.0,
-                  )
+                  ),
                 ),
-              ]
+              ],
             ),
-          ) 
-        )
+          ),
+        ),
       ),
     );
   }

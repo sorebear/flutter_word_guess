@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../blocs/levels_provider.dart';
 import '../models/guess.dart';
 import '../widgets/level_body.dart';
 import '../widgets/keyboard.dart';
@@ -10,11 +9,12 @@ class Level extends StatefulWidget {
   final String levelName;
   final String levelNum;
   final String secretWord;
+  final Function markLevelAsComplete;
 
-  Level(this.levelName, this.levelNum, this.secretWord);
+  Level({this.levelName, this.levelNum, this.secretWord, this.markLevelAsComplete});
 
   createState() {
-    return _LevelState(levelName, levelNum, secretWord);
+    return _LevelState(levelName, levelNum, markLevelAsComplete, secretWord,);
   }
 }
 
@@ -23,12 +23,13 @@ class _LevelState extends State<Level> {
   final String levelNum;
   final List<String> guess = [];
   final List<Guess> _previousGuesses = [];
+  final Function markLevelAsComplete;
   
   List<String> secretWord;
   List<String> lettersArr;
 
 
-  _LevelState(this.levelName, this.levelNum, String secretWord) {
+  _LevelState(this.levelName, this.levelNum, this.markLevelAsComplete, String secretWord) {
     this.secretWord = secretWord.toUpperCase().split('');
     this.lettersArr = _getAvailableLetters(secretWord);
   }
@@ -71,12 +72,10 @@ class _LevelState extends State<Level> {
     setState(() => guess.clear());
   }
 
-
   void _evaluateGuess(BuildContext context) {
     if (guess.join('') == secretWord.join('')) {
-      
-      
       _showWinDialogue();
+      markLevelAsComplete('${secretWord.length}-Letter', levelNum);
       return;
     }
 
@@ -118,7 +117,7 @@ class _LevelState extends State<Level> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return WinDialogue(_previousGuesses);
+        return WinDialogue(_previousGuesses, markLevelAsComplete: markLevelAsComplete);
       }
     );
   }
