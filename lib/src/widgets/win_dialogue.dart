@@ -10,7 +10,6 @@ class WinDialogue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return AlertDialog(
       title: Text(
         'You Win!',
